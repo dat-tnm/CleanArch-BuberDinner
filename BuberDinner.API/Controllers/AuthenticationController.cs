@@ -26,10 +26,10 @@ namespace BuberDinner.API.Controllers
                 );
 
             var response = new AuthenticationResponse(
-                result.Id,
-                result.FirstName,
-                result.LastName,
-                result.Email,
+                result.user.Id,
+                result.user.FirstName,
+                result.user.LastName,
+                result.user.Email,
                 result.Token);
 
             return Ok(response);
@@ -44,13 +44,13 @@ namespace BuberDinner.API.Controllers
                 );
 
             var response = new AuthenticationResponse(
-                result.Id,
-                result.FirstName,
-                result.LastName,
-                result.Email,
+                result.user.Id,
+                result.user.FirstName,
+                result.user.LastName,
+                result.user.Email,
                 result.Token);
 
-            return Ok(result);
+            return Ok(response);
         }
     }
 }
