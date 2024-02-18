@@ -1,6 +1,8 @@
-﻿using BuberDinner.Application.Common.Interfaces.Authentication;
+﻿using BuberDinner.Application.Common.Errors;
+using BuberDinner.Application.Common.Interfaces.Authentication;
 using BuberDinner.Application.Common.Interfaces.Persistence;
 using BuberDinner.Domain.Entities;
+using OneOf;
 using System;
 using System.Collections.Generic;
 using System.Linq;
@@ -28,7 +30,7 @@ namespace BuberDinner.Application.Services
             var user = _userRepo.GetUserByEmail(email);
             if (user == null)
             {
-                throw new Exception("User with given email does not exist.");
+                throw new DuplicateEmailException();
             }
 
             //Validate password is correct
@@ -46,12 +48,12 @@ namespace BuberDinner.Application.Services
                 token);
         }
 
-        public AuthenticationResult Register(string firstName, string lastName, string email, string password)
+        public OneOf<AuthenticationResult, IServiceException> Register(string firstName, string lastName, string email, string password)
         {
             //Check if user exists
             if (_userRepo.GetUserByEmail(email) != null)
             {
-                throw new Exception("User with given email already exists");
+                return new DuplicateEmailException();
             }
 
             //Create user
