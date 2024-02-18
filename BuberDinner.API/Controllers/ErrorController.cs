@@ -1,4 +1,5 @@
-﻿using BuberDinner.Application.Common.Errors;
+﻿using BuberDinner.API.Http;
+using BuberDinner.Application.Common.Errors;
 using Microsoft.AspNetCore.Diagnostics;
 using Microsoft.AspNetCore.Mvc;
 
@@ -17,7 +18,7 @@ namespace BuberDinner.API.Controllers
                 IServiceException serviceException => ((int)serviceException.StatusCode, serviceException.ErrorMessage),
                 _ => (StatusCodes.Status500InternalServerError, "An unexpected error occurred."),
             };
-
+                
             return Problem(title: message, statusCode: statusCode);
         }
     }

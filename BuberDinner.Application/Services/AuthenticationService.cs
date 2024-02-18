@@ -1,13 +1,9 @@
 ﻿using BuberDinner.Application.Common.Errors;
 using BuberDinner.Application.Common.Interfaces.Authentication;
 using BuberDinner.Application.Common.Interfaces.Persistence;
+using BuberDinner.Domain.Common.Errors;
 using BuberDinner.Domain.Entities;
-using OneOf;
-using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
+using ErrorOr;
 
 namespace BuberDinner.Application.Services
 {
@@ -24,20 +20,19 @@ namespace BuberDinner.Application.Services
             _userRepo = userRepo;
         }
 
-        public AuthenticationResult Login(string email, string password)
+        public ErrorOr<AuthenticationResult> Login(string email, string password)
         {
             //Validate if user exists
             var user = _userRepo.GetUserByEmail(email);
             if (user == null)
             {
-                throw new DuplicateEmailException();
+                return Errors.Authentication.InvalidCredentials;
             }
 
             //Validate password is correct
             if (user.Password != password)
             {
-                throw new Exception("Invalid password.");
-
+                return Errors.Authentication.InvalidCredentials;
             }
 
             //Generate token
@@ -48,12 +43,12 @@ namespace BuberDinner.Application.Services
                 token);
         }
 
-        public OneOf<AuthenticationResult, IServiceException> Register(string firstName, string lastName, string email, string password)
+        public ErrorOr<AuthenticationResult> Register(string firstName, string lastName, string email, string password)
         {
             //Check if user exists
             if (_userRepo.GetUserByEmail(email) != null)
             {
-                return new DuplicateEmailException();
+                return new[] { Errors.User.DuplicatedEmail };
             }
 
             //Create user

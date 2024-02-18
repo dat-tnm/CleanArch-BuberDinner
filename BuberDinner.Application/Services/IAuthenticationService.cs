@@ -1,11 +1,11 @@
 ﻿using BuberDinner.Application.Common.Errors;
-using OneOf;
+using ErrorOr;
 
 namespace BuberDinner.Application.Services
 {
     public interface IAuthenticationService
     {
-        OneOf<AuthenticationResult, IServiceException> Register(string firstName, string lastName, string email, string password);
-        AuthenticationResult Login(string email, string password);
+        ErrorOr<AuthenticationResult> Register(string firstName, string lastName, string email, string password);
+        ErrorOr<AuthenticationResult> Login(string email, string password);
     }
 }
