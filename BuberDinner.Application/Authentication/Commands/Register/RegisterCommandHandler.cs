@@ -1,16 +1,9 @@
 ﻿using BuberDinner.Application.Authentication.Common;
 using BuberDinner.Application.Common.Interfaces.Authentication;
 using BuberDinner.Application.Common.Interfaces.Persistence;
-using BuberDinner.Application.Services;
 using BuberDinner.Domain.Entities;
 using ErrorOr;
 using MediatR;
-using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
-using static System.Runtime.InteropServices.JavaScript.JSType;
 
 namespace BuberDinner.Application.Authentication.Commands.Register
 {
