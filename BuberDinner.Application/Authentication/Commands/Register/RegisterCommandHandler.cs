@@ -7,7 +7,7 @@ using MediatR;
 
 namespace BuberDinner.Application.Authentication.Commands.Register
 {
-    internal class RegisterCommandHandler : 
+    public class RegisterCommandHandler : 
         IRequestHandler<RegisterCommand, ErrorOr<AuthenticationResult>>
     {
         private readonly IJwtTokenGenerator _jwtTokenGenerator;
